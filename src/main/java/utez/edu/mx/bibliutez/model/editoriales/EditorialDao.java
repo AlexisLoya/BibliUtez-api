@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EditorialDao extends Dao implements DaoInterface<EditorialBean> {
-    private final String REPOSITORY = "SQLRepository";
 
     @Override
     public int add(EditorialBean obj) {
