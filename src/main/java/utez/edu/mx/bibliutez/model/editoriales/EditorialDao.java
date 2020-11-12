@@ -37,7 +37,7 @@ public class EditorialDao extends Dao implements DaoInterface<EditorialBean> {
             closeAllConnections();
         }
 
-        return false;
+        return status;
     }
 
     @Override
