@@ -22,12 +22,10 @@ public abstract class Dao {
      *
      * @param databaseActivity sentencia sql guardada en el archivo MySQLRepository.properties
      */
-    protected void mySQLRepository(String repository, String databaseActivity) {
+    protected void mySQLRepository(String query) {
         try {
-            this.connection = ConnectionMySQL.getConexion();
-            sqlSentences = ResourceBundle.getBundle(repository);
-            this.preparedStatement = this.connection.prepareStatement(sqlSentences.getString(databaseActivity), Statement.RETURN_GENERATED_KEYS);
-
+            this.connection = ConnectionMySQL.getConnection();
+            this.preparedStatement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         } catch (Exception e) {
             System.err.println("No se pudieron iniciar los recursos: " + e.getMessage());
         }

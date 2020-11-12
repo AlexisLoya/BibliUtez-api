@@ -2,12 +2,13 @@ package utez.edu.mx.bibliutez.services.general;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class ConnectionMySQL {
     //Lugar de conexión Local
     private static String ipAddress = "localhost";
     //Base de datos
-    private static String dbName = "tienda";
+    private static String dbName = "Bibliutez";
     //Usuario en Mysql
     private static String user = "root";
     //Contraseña en Mysql
@@ -15,26 +16,28 @@ public class ConnectionMySQL {
     //Puerto
     private static String service = "3306";
 
-    public static Connection getConexion() throws Exception {
-        Connection con;
+    public static Connection getConnection() throws SQLException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
-        con = DriverManager.getConnection("jdbc:mysql://" + ipAddress + "/" + dbName +
-                "?user=" + user + "&password=" + password + "&useSSL=false");
-        return con;
+        return DriverManager.getConnection(
+                "jdbc:mysql://" + ipAddress + ":" + service + "/" + dbName, user, password
+        );
     }
 
     public static void main(String[] args) {
         try {
-            ConnectionMySQL c = new ConnectionMySQL();
-            Connection con = c.getConexion();
-            System.out.println("(^_^) Connection successful ... ");
-        } catch (Exception e) {
-            System.out.println("(o_O) Conection error ... " + e);
+            Connection con = ConnectionMySQL.getConnection();
+            if (con != null) {
+                System.out.println("(^_^) Connection successful ...");
+            } else {
+                System.err.println("(o_O) Connection error ...");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

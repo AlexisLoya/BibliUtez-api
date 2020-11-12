@@ -1,13 +1,13 @@
 package utez.edu.mx.bibliutez.model.editoriales;
 
-public class EditoralBean {
+public class EditorialBean {
     private int id;
     private String nombre;
 
-    public EditoralBean() {
+    public EditorialBean() {
     }
 
-    public EditoralBean(int id, String nombre) {
+    public EditorialBean(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
