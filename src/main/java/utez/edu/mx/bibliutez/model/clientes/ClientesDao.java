@@ -75,7 +75,7 @@ public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
         } finally {
             closeAllConnections();
         }
-        return list;
+        return list ;
     }
 
     @Override
