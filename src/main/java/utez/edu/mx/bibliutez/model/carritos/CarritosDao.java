@@ -1,16 +1,17 @@
-package utez.edu.mx.bibliutez.model.gerente;
+package utez.edu.mx.bibliutez.model.carritos;
 
 import utez.edu.mx.bibliutez.model.Dao;
 import utez.edu.mx.bibliutez.model.DaoInterface;
+import utez.edu.mx.bibliutez.model.categorias.CategoriaDao;
 import utez.edu.mx.bibliutez.model.usuarios.UsuariosDao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class GerenteDao extends Dao implements DaoInterface<GerentesBean> {
+public class CarritosDao extends Dao implements DaoInterface<CarritosBean> {
     @Override
-    public int add(GerentesBean obj) {
-        mySQLRepository("insert into gerentes (usuarios_id) values (?)");
+    public int add(CarritosBean obj) {
+        mySQLRepository("insert into carritos (usuaios_id) values ?");
         try {
             preparedStatement.setInt(1, obj.getUsuarios_id().getId());
             preparedStatement.executeQuery();
@@ -26,7 +27,7 @@ public class GerenteDao extends Dao implements DaoInterface<GerentesBean> {
 
     @Override
     public boolean delete(int id) {
-        mySQLRepository("delete from gerentes where id = ?");
+        mySQLRepository("delete from carritos where id = ?");
         try {
             preparedStatement.setInt(1, id);
             status = preparedStatement.executeUpdate() == 1;
@@ -39,8 +40,8 @@ public class GerenteDao extends Dao implements DaoInterface<GerentesBean> {
     }
 
     @Override
-    public boolean update(GerentesBean obj) {
-        mySQLRepository("update gerente usuario_id = ?");
+    public boolean update(CarritosBean obj) {
+        mySQLRepository("update carritos usuarios_id = ?");
         try {
             preparedStatement.setInt(1, obj.getUsuarios_id().getId());
             resultSet = preparedStatement.executeQuery();
@@ -54,12 +55,12 @@ public class GerenteDao extends Dao implements DaoInterface<GerentesBean> {
     }
 
     @Override
-    public ArrayList<GerentesBean> findAll() {
-        mySQLRepository("select * from gerentes");
-        ArrayList<GerentesBean> list = new ArrayList<>();
+    public ArrayList<CarritosBean> findAll() {
+        mySQLRepository("select * from carritos");
+        ArrayList<CarritosBean> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();
-            GerenteDao dao = new GerenteDao();
+            CarritosDao dao = new CarritosDao();
             while (resultSet.next()) {
                 list.add(dao.findOne(resultSet.getInt("id")));
             }
@@ -72,17 +73,16 @@ public class GerenteDao extends Dao implements DaoInterface<GerentesBean> {
     }
 
     @Override
-    public GerentesBean findOne(int id) {
-        mySQLRepository("select * from gerentes");
-        GerentesBean gerente = null;
+    public CarritosBean findOne(int id) {
+        mySQLRepository("select * from carritos where id = ?");
+        CarritosBean carrito = null;
         try {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                UsuariosDao dao = new UsuariosDao();
-                gerente = new GerentesBean(
+                carrito = new CarritosBean(
                         resultSet.getInt("id"),
-                        dao.findOne(resultSet.getInt("usuarios_id"))
+                        new UsuariosDao().findOne(resultSet.getInt("usuario_id"))
                 );
             }
         } catch (SQLException e) {
@@ -90,6 +90,6 @@ public class GerenteDao extends Dao implements DaoInterface<GerentesBean> {
         } finally {
             closeAllConnections();
         }
-        return gerente;
+        return carrito;
     }
 }
