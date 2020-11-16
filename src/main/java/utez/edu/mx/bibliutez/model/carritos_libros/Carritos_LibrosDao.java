@@ -2,6 +2,9 @@ package utez.edu.mx.bibliutez.model.carritos_libros;
 
 import utez.edu.mx.bibliutez.model.Dao;
 import utez.edu.mx.bibliutez.model.DaoInterface;
+import utez.edu.mx.bibliutez.model.carritos.CarritosDao;
+import utez.edu.mx.bibliutez.model.libros.LibrosBean;
+import utez.edu.mx.bibliutez.model.libros.LibrosDao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -57,12 +60,42 @@ public class Carritos_LibrosDao extends Dao implements DaoInterface<Carritos_Lib
 
     @Override
     public ArrayList<Carritos_LibrosBean> findAll() {
-        return null;
+        mySQLRepository("select * from carritos_libros");
+        ArrayList<Carritos_LibrosBean> list = new ArrayList<>();
+        try {
+            resultSet = preparedStatement.executeQuery();
+            Carritos_LibrosDao carritos_librosDao = new Carritos_LibrosDao();
+            while (resultSet.next()) {
+                list.add(carritos_librosDao.findOne(resultSet.getInt("id")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAllConnections();
+        }
+        return list;
     }
 
     @Override
     public Carritos_LibrosBean findOne(int id) {
-        mySQLRepository("select * from carritos");
-        return null;
+        mySQLRepository("select * from carritos where id = ?");
+        Carritos_LibrosBean bean = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                bean = new Carritos_LibrosBean(
+                        resultSet.getInt("id"),
+                        new CarritosDao().findOne(resultSet.getInt("carritos_id")),
+                        new LibrosDao().findOne(resultSet.getInt("libros_id")),
+                        resultSet.getInt("cantidad")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAllConnections();
+        }
+        return bean;
     }
 }
