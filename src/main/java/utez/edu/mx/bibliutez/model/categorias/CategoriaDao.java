@@ -93,4 +93,8 @@ public class CategoriaDao extends Dao implements DaoInterface<CategoriaBean> {
         }
         return categoria;
     }
+
+    public static void main(String[] args) {
+        System.out.println(new CategoriaDao().findOne(1));
+    }
 }
