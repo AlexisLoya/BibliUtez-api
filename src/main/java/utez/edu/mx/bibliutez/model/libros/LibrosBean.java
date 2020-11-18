@@ -7,8 +7,8 @@ import utez.edu.mx.bibliutez.model.editoriales.EditorialBean;
 public class LibrosBean {
     private int id;
     private String nombre;
-    private EditorialBean editoriales_id;
-    private AutoresBean autores_id;
+    private String editoriales_id;
+    private String autores_id;
     private CategoriaBean categorias_id;
     private Double precio;
     private int num_pag;
@@ -17,7 +17,7 @@ public class LibrosBean {
     public LibrosBean() {
     }
 
-    public LibrosBean(int id, String nombre, EditorialBean editoriales_id, AutoresBean autores_id, CategoriaBean categorias_id, Double precio, int num_pag, int stock) {
+    public LibrosBean(int id, String nombre, String editoriales_id, String autores_id, CategoriaBean categorias_id, Double precio, int num_pag, int stock) {
         this.id = id;
         this.nombre = nombre;
         this.editoriales_id = editoriales_id;
@@ -44,19 +44,19 @@ public class LibrosBean {
         this.nombre = nombre;
     }
 
-    public EditorialBean getEditoriales_id() {
+    public String getEditoriales_id() {
         return editoriales_id;
     }
 
-    public void setEditoriales_id(EditorialBean editoriales_id) {
+    public void setEditoriales_id(String editoriales_id) {
         this.editoriales_id = editoriales_id;
     }
 
-    public AutoresBean getAutores_id() {
+    public String getAutores_id() {
         return autores_id;
     }
 
-    public void setAutores_id(AutoresBean autores_id) {
+    public void setAutores_id(String autores_id) {
         this.autores_id = autores_id;
     }
 
@@ -94,11 +94,11 @@ public class LibrosBean {
 
     @Override
     public String toString() {
-        return "LibroBean{" +
+        return "LibrosBean{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", editoriales_id=" + editoriales_id +
-                ", autores_id=" + autores_id +
+                ", editoriales_id='" + editoriales_id + '\'' +
+                ", autores_id='" + autores_id + '\'' +
                 ", categorias_id=" + categorias_id +
                 ", precio=" + precio +
                 ", num_pag=" + num_pag +
