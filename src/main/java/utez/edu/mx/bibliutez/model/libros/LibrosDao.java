@@ -12,11 +12,11 @@ import java.util.ArrayList;
 public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
     @Override
     public int add(LibrosBean obj) {
-        mySQLRepository("insert into (nombre, editoriales_id, autores_id, categorias_id, precio, num_pag, stock) values(?,?,?,?,?,?,?) ");
+        mySQLRepository("insert into (nombre, editoriales, autores, categorias_id, precio, num_pag, stock) values(?,?,?,?,?,?,?) ");
         try {
             preparedStatement.setString(1, obj.getNombre());
-            preparedStatement.setInt(2, obj.getEditoriales_id().getId());
-            preparedStatement.setInt(3, obj.getAutores_id().getId());
+            preparedStatement.setString(2, obj.getEditoriales_id());
+            preparedStatement.setString(3, obj.getAutores_id());
             preparedStatement.setInt(4, obj.getCategorias_id().getId());
             preparedStatement.setDouble(5, obj.getPrecio());
             preparedStatement.setInt(6, obj.getNum_pag());
@@ -48,11 +48,11 @@ public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
 
     @Override
     public boolean update(LibrosBean obj) {
-        mySQLRepository("update libros nombre = ?, editoriales_id = ?, autores_id = ?, categorias_id = ?, precio = ?, num_pag = ?, stock= ? where id = ?");
+        mySQLRepository("update libros nombre = ?, editoriales = ?, autores = ?, categorias_id = ?, precio = ?, num_pag = ?, stock= ? where id = ?");
         try {
             preparedStatement.setString(1, obj.getNombre());
-            preparedStatement.setInt(2, obj.getEditoriales_id().getId());
-            preparedStatement.setInt(3, obj.getAutores_id().getId());
+            preparedStatement.setString(2, obj.getEditoriales_id());
+            preparedStatement.setString(3, obj.getAutores_id());
             preparedStatement.setInt(4, obj.getCategorias_id().getId());
             preparedStatement.setDouble(5, obj.getPrecio());
             preparedStatement.setInt(6, obj.getNum_pag());
@@ -93,14 +93,12 @@ public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                EditorialDao editorialDao = new EditorialDao();
-                AutoresDao autoresDao = new AutoresDao();
                 CategoriaDao categoriaDao = new CategoriaDao();
                 libro = new LibrosBean(
                         resultSet.getInt("id"),
                         resultSet.getString("nombre"),
-                        editorialDao.findOne(resultSet.getInt("editoriales_id")),
-                        autoresDao.findOne(resultSet.getInt("autores_id")),
+                        resultSet.getString("editoriales"),
+                        resultSet.getString("autores"),
                         categoriaDao.findOne(resultSet.getInt("categorias_id")),
                         resultSet.getDouble("precio"),
                         resultSet.getInt("num_pag"),
