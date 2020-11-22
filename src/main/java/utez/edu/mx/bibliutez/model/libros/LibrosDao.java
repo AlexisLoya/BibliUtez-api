@@ -58,6 +58,7 @@ public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
             preparedStatement.setInt(6, obj.getNum_pag());
             preparedStatement.setInt(7, obj.getStock());
             preparedStatement.setInt(8, obj.getId());
+            resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) return true;
         } catch (SQLException e) {
             e.printStackTrace();
