@@ -1,7 +1,5 @@
 package utez.edu.mx.bibliutez.services.rest;
 
-import utez.edu.mx.bibliutez.model.categorias.CategoriaBean;
-import utez.edu.mx.bibliutez.model.categorias.CategoriaDao;
 import utez.edu.mx.bibliutez.model.libros.LibrosBean;
 import utez.edu.mx.bibliutez.model.libros.LibrosDao;
 
@@ -29,22 +27,22 @@ public class LibrosRest {
     @GET
     @Path("/findOne")
     @Produces(MediaType.APPLICATION_JSON)
-    public CategoriaBean findOne(@QueryParam("id") int id){
-        return new CategoriaDao().findOne(id);
+    public LibrosBean findOne(@QueryParam("id") int id){
+        return new LibrosDao().findOne(id);
     }
 
     @GET
     @Path("/findAll")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<CategoriaBean> findAll(){ return new CategoriaDao().findAll(); }
+    public ArrayList<LibrosBean> findAll(){ return new LibrosDao().findAll(); }
 
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean delete(@PathParam("id") int id){ return  new CategoriaDao().delete(id); }
+    public boolean delete(@PathParam("id") int id){ return  new LibrosDao().delete(id); }
 
     @PUT
     @Path("/update")
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean update(CategoriaBean bean){ return new CategoriaDao().update(bean); }
+    public boolean update(LibrosBean bean){ return new LibrosDao().update(bean); }
 }
