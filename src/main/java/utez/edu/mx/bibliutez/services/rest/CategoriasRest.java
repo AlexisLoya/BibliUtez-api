@@ -30,7 +30,7 @@ public class CategoriasRest {
     @Path("/add")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public int add(@QueryParam("obj")CategoriaBean obj){
+    public int add(CategoriaBean obj){
         return new CategoriaDao().add(obj);
     }
 
