@@ -96,7 +96,7 @@ public class CategoriaDao extends Dao implements DaoInterface<CategoriaBean> {
 
     public static void main(String[] args) {
         CategoriaDao dao = new CategoriaDao();
-       System.out.println(dao.add(new CategoriaBean("Acción")));
+       System.out.println(dao.add(new CategoriaBean(22,"Acción")));
         //System.out.println(dao.update(new CategoriaBean(2,"ciencia ficción")));
     }
 }
