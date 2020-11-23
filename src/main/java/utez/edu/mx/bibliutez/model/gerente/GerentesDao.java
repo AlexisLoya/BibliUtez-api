@@ -7,7 +7,7 @@ import utez.edu.mx.bibliutez.model.usuarios.UsuariosDao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class GerenteDao extends Dao implements DaoInterface<GerentesBean> {
+public class GerentesDao extends Dao implements DaoInterface<GerentesBean> {
     @Override
     public int add(GerentesBean obj) {
         mySQLRepository("insert into gerentes (usuarios_id) values (?)");
@@ -59,7 +59,7 @@ public class GerenteDao extends Dao implements DaoInterface<GerentesBean> {
         ArrayList<GerentesBean> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();
-            GerenteDao dao = new GerenteDao();
+            GerentesDao dao = new GerentesDao();
             while (resultSet.next()) {
                 list.add(dao.findOne(resultSet.getInt("id")));
             }
