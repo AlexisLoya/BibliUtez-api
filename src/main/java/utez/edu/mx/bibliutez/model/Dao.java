@@ -17,7 +17,7 @@ public abstract class Dao {
         this.status = false;
     }
 
-    /**
+    /*
      * Inicia los recursos necesarios para realizar una actividad en base de datos
      *
      * @param databaseActivity sentencia sql guardada en el archivo MySQLRepository.properties

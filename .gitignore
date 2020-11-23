@@ -1,0 +1,5 @@
+#Ignore all directorie targer
+target/
+
+#Ignore Class Conection
+src/main/java/utez/edu/mx/bibliutez/services/general/ConnectionMySQL
