@@ -13,7 +13,7 @@ public class GerentesDao extends Dao implements DaoInterface<GerentesBean> {
         mySQLRepository("insert into gerentes (usuarios_id) values (?)");
         try {
             preparedStatement.setInt(1, obj.getUsuarios_id().getId());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) return resultSet.getInt("id");
         } catch (SQLException e) {
@@ -40,17 +40,17 @@ public class GerentesDao extends Dao implements DaoInterface<GerentesBean> {
 
     @Override
     public boolean update(GerentesBean obj) {
-        mySQLRepository("update gerente usuario_id = ?");
+        mySQLRepository("update gerentes SET usuario_id = ?");
         try {
             preparedStatement.setInt(1, obj.getUsuarios_id().getId());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return true;
+            preparedStatement.setInt(2, obj.getId());
+            status = preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeAllConnections();
         }
-        return false;
+        return status;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class GerentesDao extends Dao implements DaoInterface<GerentesBean> {
 
     @Override
     public GerentesBean findOne(int id) {
-        mySQLRepository("select * from gerentes");
+        mySQLRepository("select * from gerentes where id=?");
         GerentesBean gerente = null;
         try {
             preparedStatement.setInt(1, id);
