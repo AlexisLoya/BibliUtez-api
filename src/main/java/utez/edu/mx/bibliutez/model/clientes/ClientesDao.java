@@ -11,13 +11,13 @@ import java.util.ArrayList;
 public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
     @Override
     public int add(ClientesBean obj) {
-        mySQLRepository("insert into clientes(fecha_nacimiento, telefono, usuario_id, domicilio) values(?,?,?,?)");
+        mySQLRepository("insert into clientes(fecha_nacimiento, telefono, usuariosBean, domicilio) values(?,?,?,?)");
         try {
             preparedStatement.setDate(1, (Date) obj.getFecha_nacimiento());
             preparedStatement.setString(2, obj.getTelefono());
             preparedStatement.setInt(3, obj.getUsuariosBean().getId());
             preparedStatement.setString(4, obj.getDomicilio());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) return resultSet.getInt("id");
         } catch (SQLException e) {
@@ -44,20 +44,20 @@ public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
 
     @Override
     public boolean update(ClientesBean obj) {
-        mySQLRepository("update clientes fecha_nacimiento = ?, telefono = ?, domicilio = ? where id = ?");
+        mySQLRepository("update clientes SET fecha_nacimiento = ?, telefono = ?,usuariosBean=?, domicilio = ? where id = ?");
         try {
             preparedStatement.setDate(1, (Date) obj.getFecha_nacimiento());
             preparedStatement.setString(2, obj.getTelefono());
-            preparedStatement.setString(3, obj.getDomicilio());
-            preparedStatement.setInt(4, obj.getId());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return true;
+            preparedStatement.setInt(3, obj.getUsuariosBean().getId());
+            preparedStatement.setString(4, obj.getDomicilio());
+            preparedStatement.setInt(5, obj.getId());
+            status = preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeAllConnections();
         }
-        return false;
+        return status;
     }
 
     @Override
