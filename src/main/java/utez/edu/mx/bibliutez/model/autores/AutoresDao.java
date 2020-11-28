@@ -13,7 +13,7 @@ public class AutoresDao extends Dao implements DaoInterface<AutoresBean> {
         mySQLRepository("insert into autores (nombre) values (?)");
         try {
             preparedStatement.setString(1, obj.getNombre());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) return resultSet.getInt(1);
         } catch (SQLException e) {
@@ -36,23 +36,22 @@ public class AutoresDao extends Dao implements DaoInterface<AutoresBean> {
         } finally {
             closeAllConnections();
         }
-        return false;
+        return status;
     }
 
     @Override
     public boolean update(AutoresBean obj) {
-        mySQLRepository("update autores nombre = ? where id = ?");
+        mySQLRepository("update autores SET nombre = ? where id = ?");
         try {
             preparedStatement.setString(1, obj.getNombre());
             preparedStatement.setInt(2, obj.getId());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return true;
+            status = preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeAllConnections();
         }
-        return false;
+        return status;
     }
 
     @Override
@@ -67,6 +66,8 @@ public class AutoresDao extends Dao implements DaoInterface<AutoresBean> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            closeAllConnections();
         }
         return list;
     }
@@ -86,6 +87,8 @@ public class AutoresDao extends Dao implements DaoInterface<AutoresBean> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            closeAllConnections();
         }
         return autor;
     }

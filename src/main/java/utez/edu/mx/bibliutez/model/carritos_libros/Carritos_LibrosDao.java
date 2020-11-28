@@ -17,7 +17,7 @@ public class Carritos_LibrosDao extends Dao implements DaoInterface<Carritos_Lib
             preparedStatement.setInt(1, obj.getCarritos_id().getId());
             preparedStatement.setInt(2, obj.getLibros_id().getId());
             preparedStatement.setInt(3, obj.getCantidad());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) return resultSet.getInt("id");
         } catch (SQLException e) {
@@ -39,23 +39,24 @@ public class Carritos_LibrosDao extends Dao implements DaoInterface<Carritos_Lib
         } finally {
             closeAllConnections();
         }
-        return false;
+        return status;
     }
 
     @Override
     public boolean update(Carritos_LibrosBean obj) {
-        mySQLRepository("update carritos_libros libros_id= ?, cantidad= ?");
+        mySQLRepository("update carritos_libros SET carritos_id=?,libros_id= ?, cantidad= ? where id=?");
         try {
-            preparedStatement.setInt(1, obj.getLibros_id().getId());
+            preparedStatement.setInt(1, obj.getCarritos_id().getId());
             preparedStatement.setInt(2, obj.getLibros_id().getId());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return true;
+            preparedStatement.setInt(3, obj.getCantidad());
+            preparedStatement.setInt(4, obj.getId());
+            status = preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeAllConnections();
         }
-        return false;
+        return status;
     }
 
     @Override
@@ -64,9 +65,9 @@ public class Carritos_LibrosDao extends Dao implements DaoInterface<Carritos_Lib
         ArrayList<Carritos_LibrosBean> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();
-            Carritos_LibrosDao carritos_librosDao = new Carritos_LibrosDao();
+            Carritos_LibrosDao DAO = new Carritos_LibrosDao();
             while (resultSet.next()) {
-                list.add(carritos_librosDao.findOne(resultSet.getInt("id")));
+                list.add(DAO.findOne(resultSet.getInt("id")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

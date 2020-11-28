@@ -8,18 +8,24 @@ import java.util.Date;
 
 public class TransaccionesBean {
     private int id;
-    private ClientesBean cliente_id;
+    private ClientesBean cliente;
+    private Double monto_total;
     private Date fecha;
-    private ArrayList<LibrosBean> libros;
 
     public TransaccionesBean() {
     }
 
-    public TransaccionesBean(int id, ClientesBean cliente_id, Date fecha, ArrayList<LibrosBean> libros) {
-        this.id = id;
-        this.cliente_id = cliente_id;
+    public TransaccionesBean(ClientesBean cliente, Double monto_total, Date fecha) {
+        this.cliente = cliente;
+        this.monto_total = monto_total;
         this.fecha = fecha;
-        this.libros = libros;
+    }
+
+    public TransaccionesBean(int id, ClientesBean cliente, Double monto_total, Date fecha) {
+        this.id = id;
+        this.cliente = cliente;
+        this.monto_total = monto_total;
+        this.fecha = fecha;
     }
 
     public int getId() {
@@ -30,12 +36,20 @@ public class TransaccionesBean {
         this.id = id;
     }
 
-    public ClientesBean getCliente_id() {
-        return cliente_id;
+    public ClientesBean getCliente() {
+        return cliente;
     }
 
-    public void setCliente_id(ClientesBean cliente_id) {
-        this.cliente_id = cliente_id;
+    public void setCliente(ClientesBean cliente) {
+        this.cliente = cliente;
+    }
+
+    public Double getMonto_total() {
+        return monto_total;
+    }
+
+    public void setMonto_total(Double monto_total) {
+        this.monto_total = monto_total;
     }
 
     public Date getFecha() {
@@ -46,21 +60,13 @@ public class TransaccionesBean {
         this.fecha = fecha;
     }
 
-    public ArrayList<LibrosBean> getLibros() {
-        return libros;
-    }
-
-    public void setLibros(ArrayList<LibrosBean> libros) {
-        this.libros = libros;
-    }
-
     @Override
     public String toString() {
         return "TransaccionesBean{" +
                 "id=" + id +
-                ", cliente_id=" + cliente_id +
+                ", cliente=" + cliente +
+                ", monto_total=" + monto_total +
                 ", fecha=" + fecha +
-                ", libros=" + libros +
                 '}';
     }
 }

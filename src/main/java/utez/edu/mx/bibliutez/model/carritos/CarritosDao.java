@@ -14,7 +14,7 @@ public class CarritosDao extends Dao implements DaoInterface<CarritosBean> {
         mySQLRepository("insert into carritos (usuaios_id) values ?");
         try {
             preparedStatement.setInt(1, obj.getUsuarios_id().getId());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) return resultSet.getInt("id");
         } catch (SQLException e) {
@@ -41,17 +41,17 @@ public class CarritosDao extends Dao implements DaoInterface<CarritosBean> {
 
     @Override
     public boolean update(CarritosBean obj) {
-        mySQLRepository("update carritos usuarios_id = ?");
+        mySQLRepository("update carritos set usuarios_id = ? where id = ?");
         try {
             preparedStatement.setInt(1, obj.getUsuarios_id().getId());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return true;
+            preparedStatement.setInt(2, obj.getId());
+            status = preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeAllConnections();
         }
-        return false;
+        return status;
     }
 
     @Override

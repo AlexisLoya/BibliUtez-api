@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
     @Override
     public int add(LibrosBean obj) {
-        mySQLRepository("insert into (nombre, editoriales, autores, categorias_id, precio, num_pag, stock) values(?,?,?,?,?,?,?) ");
+        mySQLRepository("insert into libros (nombre, editoriales_id, autores_id, categorias_id, precio, num_pag, stock) values(?,?,?,?,?,?,?) ");
         try {
             preparedStatement.setString(1, obj.getNombre());
             preparedStatement.setString(2, obj.getEditoriales_id());
@@ -21,7 +21,7 @@ public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
             preparedStatement.setDouble(5, obj.getPrecio());
             preparedStatement.setInt(6, obj.getNum_pag());
             preparedStatement.setInt(7, obj.getStock());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) return resultSet.getInt("id");
         } catch (SQLException e) {
@@ -48,7 +48,7 @@ public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
 
     @Override
     public boolean update(LibrosBean obj) {
-        mySQLRepository("update libros nombre = ?, editoriales = ?, autores = ?, categorias_id = ?, precio = ?, num_pag = ?, stock= ? where id = ?");
+        mySQLRepository("update libros SET nombre = ?, editoriales_id = ?, autores_id = ?, categorias_id = ?, precio = ?, num_pag = ?, stock= ? where id = ?");
         try {
             preparedStatement.setString(1, obj.getNombre());
             preparedStatement.setString(2, obj.getEditoriales_id());
@@ -58,14 +58,13 @@ public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
             preparedStatement.setInt(6, obj.getNum_pag());
             preparedStatement.setInt(7, obj.getStock());
             preparedStatement.setInt(8, obj.getId());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return true;
+            status = preparedStatement.executeUpdate()== 1;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeAllConnections();
         }
-        return false;
+        return status;
     }
 
     @Override
@@ -98,8 +97,8 @@ public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
                 libro = new LibrosBean(
                         resultSet.getInt("id"),
                         resultSet.getString("nombre"),
-                        resultSet.getString("editoriales"),
-                        resultSet.getString("autores"),
+                        resultSet.getString("editoriales_id"),
+                        resultSet.getString("autores_id"),
                         categoriaDao.findOne(resultSet.getInt("categorias_id")),
                         resultSet.getDouble("precio"),
                         resultSet.getInt("num_pag"),

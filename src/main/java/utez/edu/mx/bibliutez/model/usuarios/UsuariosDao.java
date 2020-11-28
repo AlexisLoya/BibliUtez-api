@@ -20,7 +20,7 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
             preparedStatement.setString(6, obj.getSexo());
             preparedStatement.setInt(7, obj.getRolesid().getId());
             preparedStatement.setString(8, obj.getPassword());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) return resultSet.getInt("id");
         } catch (SQLException e) {
@@ -33,7 +33,7 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
 
     @Override
     public boolean delete(int id) {
-        mySQLRepository("update usuarios estatus = 0 where id = ?");
+        mySQLRepository("delete usuarios estatus = 0 where id = ?");
         try {
             preparedStatement.setInt(1, id);
             status = preparedStatement.executeUpdate() == 1;
@@ -48,22 +48,24 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
 
     @Override
     public boolean update(UsuariosBean obj) {
-        mySQLRepository("update usuarios nombre = ?, apellido1= ?, apellido2= ?, email= ?, sexo= ? where id= ?");
+        mySQLRepository("update usuarios SET nombre = ?, apellido1= ?, apellido2= ?, email= ?,estatus= ?, sexo= ?,rolesid=?,password=? where id= ?");
         try {
             preparedStatement.setString(1, obj.getNombre());
             preparedStatement.setString(2, obj.getApellido1());
             preparedStatement.setString(3, obj.getApellido2());
             preparedStatement.setString(4, obj.getEmail());
-            preparedStatement.setString(5, obj.getSexo());
-            preparedStatement.setInt(5, obj.getId());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return true;
+            preparedStatement.setInt(5, obj.getEstatus());
+            preparedStatement.setString(6, obj.getSexo());
+            preparedStatement.setInt(7, obj.getRolesid().getId());
+            preparedStatement.setString(8, obj.getPassword());
+            preparedStatement.setInt(9, obj.getId());
+            status = preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeAllConnections();
         }
-        return false;
+        return status;
     }
 
     @Override
@@ -79,7 +81,7 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return list; // COLOCASTE NULL
     }
 
     @Override

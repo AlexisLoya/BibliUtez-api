@@ -42,18 +42,17 @@ public class EditorialDao extends Dao implements DaoInterface<EditorialBean> {
 
     @Override
     public boolean update(EditorialBean obj) {
-        mySQLRepository("update editoriales nombre = ? where id=?");
+        mySQLRepository("update editoriales SET nombre = ? where id=?");
         try {
             preparedStatement.setString(1, obj.getNombre());
             preparedStatement.setInt(2, obj.getId());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return true;
+            status = preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeAllConnections();
         }
-        return false;
+        return status;
     }
 
     @Override

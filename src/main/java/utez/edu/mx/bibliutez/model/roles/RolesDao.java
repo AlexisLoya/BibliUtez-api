@@ -12,9 +12,9 @@ public class RolesDao extends Dao implements DaoInterface<RolesBean> {
         mySQLRepository("insert into roles (nombre) values(?)");
         try {
             preparedStatement.setString(1, obj.getNombre());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) return resultSet.getInt("id");
+            if (resultSet.next()) return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -43,14 +43,13 @@ public class RolesDao extends Dao implements DaoInterface<RolesBean> {
         try {
             preparedStatement.setString(1, obj.getNombre());
             preparedStatement.setInt(2, obj.getId());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return true;
+            status = preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeAllConnections();
         }
-        return false;
+        return status;
     }
 
     @Override
