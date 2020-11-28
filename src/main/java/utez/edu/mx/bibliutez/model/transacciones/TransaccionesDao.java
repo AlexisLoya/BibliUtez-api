@@ -2,7 +2,6 @@ package utez.edu.mx.bibliutez.model.transacciones;
 
 import utez.edu.mx.bibliutez.model.Dao;
 import utez.edu.mx.bibliutez.model.DaoInterface;
-import utez.edu.mx.bibliutez.model.clientes.ClientesBean;
 import utez.edu.mx.bibliutez.model.clientes.ClientesDao;
 
 import java.sql.Date;
