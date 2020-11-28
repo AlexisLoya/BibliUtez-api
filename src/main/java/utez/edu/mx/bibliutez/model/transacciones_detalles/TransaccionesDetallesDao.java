@@ -2,9 +2,7 @@ package utez.edu.mx.bibliutez.model.transacciones_detalles;
 
 import utez.edu.mx.bibliutez.model.Dao;
 import utez.edu.mx.bibliutez.model.DaoInterface;
-import utez.edu.mx.bibliutez.model.libros.LibrosBean;
 import utez.edu.mx.bibliutez.model.libros.LibrosDao;
-import utez.edu.mx.bibliutez.model.transacciones.TransaccionesBean;
 import utez.edu.mx.bibliutez.model.transacciones.TransaccionesDao;
 
 import java.sql.SQLException;
@@ -22,7 +20,7 @@ public class TransaccionesDetallesDao extends
             preparedStatement.setDouble(3, obj.getMonto());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if(resultSet.next()) return resultSet.getInt();
+            if(resultSet.next()) return resultSet.getInt("id");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
