@@ -8,6 +8,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 
+@Path("/detalles")
+
 public class TransaccionesDetallesRest {
     @GET
     @Path("/hey")

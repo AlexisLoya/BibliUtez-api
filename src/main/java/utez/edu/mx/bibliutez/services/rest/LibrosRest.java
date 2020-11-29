@@ -1,10 +1,12 @@
 package utez.edu.mx.bibliutez.services.rest;
 
+import org.json.JSONObject;
 import utez.edu.mx.bibliutez.model.libros.LibrosBean;
 import utez.edu.mx.bibliutez.model.libros.LibrosDao;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
 @Path("/libros")
@@ -34,7 +36,11 @@ public class LibrosRest {
     @GET
     @Path("/findAll")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<LibrosBean> findAll(){ return new LibrosDao().findAll(); }
+    public Response findAll(){
+        JSONObject json = new JSONObject();
+        json.put("libros",new LibrosDao().findAll());
+        return Response.ok(json.toString()).build();
+    }
 
     @DELETE
     @Path("/delete/{id}")

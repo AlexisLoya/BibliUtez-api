@@ -97,8 +97,8 @@ public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
                 libro = new LibrosBean(
                         resultSet.getInt("id"),
                         resultSet.getString("nombre"),
-                        resultSet.getString("editoriales_id"),
-                        resultSet.getString("autores_id"),
+                        resultSet.getString("editoriales"),
+                        resultSet.getString("autores"),
                         categoriaDao.findOne(resultSet.getInt("categorias_id")),
                         resultSet.getDouble("precio"),
                         resultSet.getInt("num_pag"),
