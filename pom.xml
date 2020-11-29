@@ -31,7 +31,12 @@
       <artifactId>jaxrs-ri</artifactId>
       <version>2.29</version>
     </dependency>
-
+    <!-- Dependencia para JSONObject -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20201115</version>
+    </dependency>
   </dependencies>
 
   <build>
