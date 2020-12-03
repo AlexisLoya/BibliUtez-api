@@ -111,5 +111,43 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
         return  usuario;
     }
 
-
+    public boolean checkAccess(String email, String password){
+        mySQLRepository("SELECT * FROM bibliutez.usuarios where estatus = 1 and email = ? and password = ?");
+        try {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAllConnections();
+        }
+        return false;
+    }
+    public UsuariosBean findEmail(String email) {
+        mySQLRepository("select * from usuarios where estatus = 1 and email = ?");
+        UsuariosBean usuario = null;
+        try {
+            preparedStatement.setString(1,email);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                usuario = new UsuariosBean(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nombre"),
+                        resultSet.getString("apellido1"),
+                        resultSet.getString("apellido2"),
+                        resultSet.getString("email"),
+                        resultSet.getInt("estatus"),
+                        resultSet.getString("sexo"),
+                        new RolesDao().findOne(resultSet.getInt("roles_id"))
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAllConnections();
+        }
+        return  usuario;
+    }
 }

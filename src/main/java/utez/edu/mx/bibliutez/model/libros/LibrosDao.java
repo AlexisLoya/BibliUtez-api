@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
     @Override
     public int add(LibrosBean obj) {
-        mySQLRepository("insert into libros (nombre, editoriales_id, autores_id, categorias_id, precio, num_pag, stock) values(?,?,?,?,?,?,?) ");
+        mySQLRepository("INSERT INTO `bibliutez`.`libros` (`nombre`, `editoriales`, `autores`, `categorias_id`, `precio`, `num_pag`, `stock`) VALUES (?,?,?,?,?,?,?)");
         try {
             preparedStatement.setString(1, obj.getNombre());
             preparedStatement.setString(2, obj.getEditoriales_id());
@@ -23,7 +23,7 @@ public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
             preparedStatement.setInt(7, obj.getStock());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) return resultSet.getInt("id");
+            if (resultSet.next()) return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -48,7 +48,7 @@ public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
 
     @Override
     public boolean update(LibrosBean obj) {
-        mySQLRepository("update libros SET nombre = ?, editoriales_id = ?, autores_id = ?, categorias_id = ?, precio = ?, num_pag = ?, stock= ? where id = ?");
+        mySQLRepository("update libros SET nombre ?, editoriales=?, autores=?, categorias_id=?, precio=?, num_pag=?, stock=? where id = ?");
         try {
             preparedStatement.setString(1, obj.getNombre());
             preparedStatement.setString(2, obj.getEditoriales_id());
