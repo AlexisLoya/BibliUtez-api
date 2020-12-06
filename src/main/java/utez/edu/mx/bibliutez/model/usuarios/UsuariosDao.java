@@ -22,7 +22,7 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
             preparedStatement.setString(8, obj.getPassword());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) return resultSet.getInt("id");
+            if (resultSet.next()) return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

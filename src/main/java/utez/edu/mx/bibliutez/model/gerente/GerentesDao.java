@@ -15,7 +15,7 @@ public class GerentesDao extends Dao implements DaoInterface<GerentesBean> {
             preparedStatement.setInt(1, obj.getUsuarios_id().getId());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) return resultSet.getInt("id");
+            if (resultSet.next()) return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

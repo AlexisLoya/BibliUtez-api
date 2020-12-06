@@ -20,7 +20,7 @@ public class TransaccionesDetallesDao extends
             preparedStatement.setDouble(3, obj.getMonto());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if(resultSet.next()) return resultSet.getInt("id");
+            if (resultSet.next()) return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

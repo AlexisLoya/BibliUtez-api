@@ -19,7 +19,7 @@ public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
             preparedStatement.setString(4, obj.getDomicilio());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) return resultSet.getInt("id");
+            if (resultSet.next()) return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

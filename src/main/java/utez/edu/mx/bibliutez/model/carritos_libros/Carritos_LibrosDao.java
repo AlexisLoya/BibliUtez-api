@@ -19,7 +19,7 @@ public class Carritos_LibrosDao extends Dao implements DaoInterface<Carritos_Lib
             preparedStatement.setInt(3, obj.getCantidad());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) return resultSet.getInt("id");
+            if (resultSet.next()) return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

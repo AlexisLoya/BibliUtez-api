@@ -18,7 +18,7 @@ public class TransaccionesDao extends Dao implements DaoInterface<TransaccionesB
             preparedStatement.setDate(3, (Date) obj.getFecha());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) return resultSet.getInt("id");
+            if (resultSet.next()) return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
