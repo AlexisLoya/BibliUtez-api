@@ -23,7 +23,9 @@ public class LibrosRest {
     @Path("/add")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public int add(LibrosBean obj){return new LibrosDao().add(obj);}
+    public int add(LibrosBean obj){
+        System.out.println("add->Libro");
+        return new LibrosDao().add(obj);}
 
     @GET
     @Path("/findOne")

@@ -10,7 +10,9 @@ import java.util.ArrayList;
 public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
     @Override
     public int add(UsuariosBean obj) {
-        mySQLRepository("insert into usuarios (nombre, apellido1, apellido2, email, estatus, sexo, roles_id, password) values (?,?,?,?,?,?,?,?)");
+        mySQLRepository("INSERT INTO `bibliutez`.`usuarios` (`nombre`, `apellido1`, `apellido2`, `email`, `estatus`, `sexo`, `roles_id`, `password`) VALUES (?,?,?,?,?,?,?,?);");
+        System.out.println("hey");
+        int a = 2;
         try {
             preparedStatement.setString(1, obj.getNombre());
             preparedStatement.setString(2, obj.getApellido1());
@@ -18,11 +20,14 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
             preparedStatement.setString(4, obj.getEmail());
             preparedStatement.setInt(5, obj.getEstatus());
             preparedStatement.setString(6, obj.getSexo());
-            preparedStatement.setInt(7, obj.getRolesid().getId());
+            preparedStatement.setInt(7, a);
             preparedStatement.setString(8, obj.getPassword());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) return resultSet.getInt(1);
+            if (resultSet.next()) {
+                System.out.println( "id:"+resultSet.getInt(1));
+                return resultSet.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

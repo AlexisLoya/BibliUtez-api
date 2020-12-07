@@ -11,15 +11,22 @@ import java.util.ArrayList;
 public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
     @Override
     public int add(ClientesBean obj) {
-        mySQLRepository("insert into clientes(fecha_nacimiento, telefono, usuariosBean, domicilio) values(?,?,?,?)");
+        mySQLRepository("INSERT INTO `bibliutez`.`clientes` (`fecha_nacimiento`, `telefono`, `usuarios_id`, `domicilio`) VALUES (?,?,?,?')");
         try {
             preparedStatement.setDate(1, (Date) obj.getFecha_nacimiento());
+            System.out.println("1");
             preparedStatement.setString(2, obj.getTelefono());
+            System.out.println("2");
             preparedStatement.setInt(3, obj.getUsuariosBean().getId());
+            System.out.println("3");
             preparedStatement.setString(4, obj.getDomicilio());
+            System.out.println("4");
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) return resultSet.getInt(1);
+            if (resultSet.next()){
+                System.out.println("ClienteId:"+resultSet.getInt(1));
+                return resultSet.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -90,7 +97,7 @@ public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
                         resultSet.getInt("id"),
                         resultSet.getDate("fecha_nacimiento"),
                         resultSet.getString("telefono"),
-                        new UsuariosDao().findOne(resultSet.getInt("id")),
+                        new UsuariosDao().findOne(resultSet.getInt("usuarios_id")),
                         resultSet.getString("domicilio")
                 );
             }

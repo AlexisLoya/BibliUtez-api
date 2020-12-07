@@ -2,9 +2,7 @@ package utez.edu.mx.bibliutez.model.libros;
 
 import utez.edu.mx.bibliutez.model.Dao;
 import utez.edu.mx.bibliutez.model.DaoInterface;
-import utez.edu.mx.bibliutez.model.autores.AutoresDao;
 import utez.edu.mx.bibliutez.model.categorias.CategoriaDao;
-import utez.edu.mx.bibliutez.model.editoriales.EditorialDao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

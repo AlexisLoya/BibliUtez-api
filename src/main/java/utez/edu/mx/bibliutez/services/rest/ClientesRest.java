@@ -24,8 +24,8 @@ public class ClientesRest {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public int add(ClientesBean obj){
-        return new ClientesDao().add(obj);
-    }
+        System.out.println("add->cliente");
+        return new ClientesDao().add(obj);}
 
     @GET
     @Path("/findOne")

@@ -39,6 +39,16 @@ public class UsuariosBean {
         this.rolesid = rolesid;
         this.password = password;
     }
+    public UsuariosBean(String nombre, String apellido1, String apellido2, String email, int estatus, String sexo, RolesBean rolesid, String password) {
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.email = email;
+        this.estatus = estatus;
+        this.sexo = sexo;
+        this.rolesid = rolesid;
+        this.password = password;
+    }
 
     public int getId() {
         return id;

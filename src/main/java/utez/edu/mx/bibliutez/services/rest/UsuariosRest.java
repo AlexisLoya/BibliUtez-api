@@ -1,6 +1,8 @@
 package utez.edu.mx.bibliutez.services.rest;
 
 
+
+
 import utez.edu.mx.bibliutez.model.usuarios.UsuariosBean;
 import utez.edu.mx.bibliutez.model.usuarios.UsuariosDao;
 
@@ -23,7 +25,9 @@ public class UsuariosRest  {
     @Path("/add")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public int add(UsuariosBean obj){return new UsuariosDao().add(obj);}
+    public int add(UsuariosBean obj){
+        System.out.println("add->usuario");
+        return new UsuariosDao().add(obj);}
 
     @GET
     @Path("/findOne")
