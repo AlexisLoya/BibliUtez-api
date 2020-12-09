@@ -2,6 +2,8 @@ package utez.edu.mx.bibliutez.services.rest;
 
 import utez.edu.mx.bibliutez.model.carritos.CarritosBean;
 import utez.edu.mx.bibliutez.model.carritos.CarritosDao;
+import utez.edu.mx.bibliutez.model.carritos_libros.Carritos_LibrosBean;
+import utez.edu.mx.bibliutez.model.carritos_libros.Carritos_LibrosDao;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -47,4 +49,12 @@ public class CarritosRest {
     @Path("/update")
     @Produces(MediaType.APPLICATION_JSON)
     public boolean update(CarritosBean bean){ return new CarritosDao().update(bean); }
+
+    @GET
+    @Path("/check")
+    @Produces(MediaType.APPLICATION_JSON)
+    public CarritosBean checkAccess(@QueryParam("email") String email, @QueryParam("password") String password){
+        return new CarritosDao().checkAccess(email, password);
+    }
+
 }

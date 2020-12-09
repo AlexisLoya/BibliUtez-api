@@ -60,10 +60,5 @@ public class UsuariosRest  {
         return new UsuariosDao().findEmail(email);
     }
 
-    @GET
-    @Path("/check")
-    @Produces(MediaType.APPLICATION_JSON)
-    public boolean checkAccess(@QueryParam("email") String email,@QueryParam("password") String password){
-        return new UsuariosDao().checkAccess(email, password);
-    }
+
 }

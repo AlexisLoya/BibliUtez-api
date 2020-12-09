@@ -4,28 +4,29 @@ import utez.edu.mx.bibliutez.model.Dao;
 import utez.edu.mx.bibliutez.model.DaoInterface;
 import utez.edu.mx.bibliutez.model.usuarios.UsuariosDao;
 
-import java.sql.Date;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
     @Override
     public int add(ClientesBean obj) {
-        mySQLRepository("INSERT INTO `bibliutez`.`clientes` (`fecha_nacimiento`, `telefono`, `usuarios_id`, `domicilio`) VALUES (?,?,?,?')");
+        mySQLRepository("UPDATE `bibliutez`.`clientes` SET `fecha_nacimiento` = ?, `telefono` = ?, `domicilio` = ? WHERE (`usuarios_id`= ?)");
+        System.out.println(obj);
         try {
-            preparedStatement.setDate(1, (Date) obj.getFecha_nacimiento());
+            preparedStatement.setString(1, obj.getFecha_nacimiento());
             System.out.println("1");
             preparedStatement.setString(2, obj.getTelefono());
             System.out.println("2");
-            preparedStatement.setInt(3, obj.getUsuariosBean().getId());
+            preparedStatement.setString(3, obj.getDomicilio());
             System.out.println("3");
-            preparedStatement.setString(4, obj.getDomicilio());
+            preparedStatement.setInt(4, obj.getUsuariosBean().getId());
             System.out.println("4");
-            preparedStatement.executeUpdate();
-            resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()){
-                System.out.println("ClienteId:"+resultSet.getInt(1));
-                return resultSet.getInt(1);
+
+            status = preparedStatement.executeUpdate() == 1;
+            if (status) {
+                System.out.println("stauts: "+obj.getUsuariosBean().getId());
+                return fixId(obj.getUsuariosBean().getId()) ;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,7 +54,7 @@ public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
     public boolean update(ClientesBean obj) {
         mySQLRepository("update clientes SET fecha_nacimiento = ?, telefono = ?,usuariosBean=?, domicilio = ? where id = ?");
         try {
-            preparedStatement.setDate(1, (Date) obj.getFecha_nacimiento());
+            preparedStatement.setString(1, obj.getFecha_nacimiento());
             preparedStatement.setString(2, obj.getTelefono());
             preparedStatement.setInt(3, obj.getUsuariosBean().getId());
             preparedStatement.setString(4, obj.getDomicilio());
@@ -74,7 +75,7 @@ public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
         try {
             resultSet = preparedStatement.executeQuery();
             ClientesDao dao = new ClientesDao();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 list.add(dao.findOne(resultSet.getInt("id")));
             }
         } catch (SQLException e) {
@@ -82,7 +83,7 @@ public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
         } finally {
             closeAllConnections();
         }
-        return list ;
+        return list;
     }
 
     @Override
@@ -95,7 +96,7 @@ public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
             if (resultSet.next()) {
                 cliente = new ClientesBean(
                         resultSet.getInt("id"),
-                        resultSet.getDate("fecha_nacimiento"),
+                        resultSet.getString("fecha_nacimiento"),
                         resultSet.getString("telefono"),
                         new UsuariosDao().findOne(resultSet.getInt("usuarios_id")),
                         resultSet.getString("domicilio")
@@ -108,4 +109,20 @@ public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
         }
         return cliente;
     }
+
+    public int fixId(int usuariosBean) {
+        mySQLRepository("SELECT * FROM bibliutez.clientes WHERE (`usuarios_id`= ?)");
+        try {
+            preparedStatement.setInt(1, usuariosBean);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                System.out.println("fix->"+resultSet.getInt(1));
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

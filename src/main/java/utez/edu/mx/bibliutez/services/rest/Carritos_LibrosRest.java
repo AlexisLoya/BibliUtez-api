@@ -3,6 +3,7 @@ package utez.edu.mx.bibliutez.services.rest;
 
 import utez.edu.mx.bibliutez.model.carritos_libros.Carritos_LibrosBean;
 import utez.edu.mx.bibliutez.model.carritos_libros.Carritos_LibrosDao;
+import utez.edu.mx.bibliutez.model.usuarios.UsuariosDao;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -36,6 +37,13 @@ public class Carritos_LibrosRest {
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Carritos_LibrosBean> findAll(){ return new Carritos_LibrosDao().findAll(); }
 
+    @GET
+    @Path("/findCarrito")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Carritos_LibrosBean> findCarrito(@QueryParam("id") int id){
+        return new Carritos_LibrosDao().findCarrito(id);
+    }
+
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -45,5 +53,10 @@ public class Carritos_LibrosRest {
     @Path("/update")
     @Produces(MediaType.APPLICATION_JSON)
     public boolean update(Carritos_LibrosBean bean){ return new Carritos_LibrosDao().update(bean); }
+
+    @POST
+    @Path("/sell")
+    public boolean sellBook(Carritos_LibrosBean bean){ return  new Carritos_LibrosDao().sellBooks(bean);}
+
 
 }

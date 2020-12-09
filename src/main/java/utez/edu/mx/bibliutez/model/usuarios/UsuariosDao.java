@@ -11,7 +11,6 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
     @Override
     public int add(UsuariosBean obj) {
         mySQLRepository("INSERT INTO `bibliutez`.`usuarios` (`nombre`, `apellido1`, `apellido2`, `email`, `estatus`, `sexo`, `roles_id`, `password`) VALUES (?,?,?,?,?,?,?,?);");
-        System.out.println("hey");
         int a = 2;
         try {
             preparedStatement.setString(1, obj.getNombre());
@@ -25,7 +24,7 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                System.out.println( "id:"+resultSet.getInt(1));
+                System.out.println( "Usuarioid:"+resultSet.getInt(1));
                 return resultSet.getInt(1);
             }
         } catch (SQLException e) {
@@ -116,20 +115,7 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
         return  usuario;
     }
 
-    public boolean checkAccess(String email, String password){
-        mySQLRepository("SELECT * FROM bibliutez.usuarios where estatus = 1 and email = ? and password = ?");
-        try {
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeAllConnections();
-        }
-        return false;
-    }
+
     public UsuariosBean findEmail(String email) {
         mySQLRepository("select * from usuarios where estatus = 1 and email = ?");
         UsuariosBean usuario = null;

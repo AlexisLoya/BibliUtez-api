@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class ClientesBean {
     private int id;
-    private Date fecha_nacimiento;
+    private String fecha_nacimiento;
     private String telefono;
     private UsuariosBean usuariosBean;
     private String domicilio;
@@ -14,7 +14,13 @@ public class ClientesBean {
     public ClientesBean() {
     }
 
-    public ClientesBean(int id, Date fecha_nacimiento, String telefono, UsuariosBean usuariosBean, String domicilio) {
+    public ClientesBean(String fecha_nacimiento, String telefono, UsuariosBean usuariosBean, String domicilio) {
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.telefono = telefono;
+        this.usuariosBean = usuariosBean;
+        this.domicilio = domicilio;
+    }
+    public ClientesBean(int id, String fecha_nacimiento, String telefono, UsuariosBean usuariosBean, String domicilio) {
         this.id = id;
         this.fecha_nacimiento = fecha_nacimiento;
         this.telefono = telefono;
@@ -30,11 +36,11 @@ public class ClientesBean {
         this.id = id;
     }
 
-    public Date getFecha_nacimiento() {
+    public String getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
+    public void setFecha_nacimiento(String fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 

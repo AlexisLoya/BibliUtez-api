@@ -2,6 +2,7 @@ package utez.edu.mx.bibliutez.model.libros;
 
 import utez.edu.mx.bibliutez.model.Dao;
 import utez.edu.mx.bibliutez.model.DaoInterface;
+import utez.edu.mx.bibliutez.model.carritos_libros.Carritos_LibrosBean;
 import utez.edu.mx.bibliutez.model.categorias.CategoriaDao;
 
 import java.sql.SQLException;
@@ -110,4 +111,6 @@ public class LibrosDao extends Dao implements DaoInterface<LibrosBean> {
         }
         return libro;
     }
+
+
 }

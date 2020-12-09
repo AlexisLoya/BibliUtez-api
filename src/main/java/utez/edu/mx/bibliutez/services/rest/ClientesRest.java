@@ -19,7 +19,7 @@ public class ClientesRest {
     }
 
 
-    @POST
+    @PUT
     @Path("/add")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -37,7 +37,9 @@ public class ClientesRest {
     @GET
     @Path("/findAll")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<ClientesBean> findAll(){ return new ClientesDao().findAll(); }
+    public ArrayList<ClientesBean> findAll(){
+        System.out.println("findAll->Clientes");
+        return new ClientesDao().findAll(); }
 
     @DELETE
     @Path("/delete/{id}")
