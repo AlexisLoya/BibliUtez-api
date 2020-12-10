@@ -35,6 +35,14 @@ public class ClientesRest {
     }
 
     @GET
+    @Path("/findCliente")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ClientesBean findCliente(@QueryParam("id") int id){
+        return new ClientesDao().findCliente(id);
+    }
+
+
+    @GET
     @Path("/findAll")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<ClientesBean> findAll(){

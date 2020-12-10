@@ -110,6 +110,30 @@ public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
         return cliente;
     }
 
+    public ClientesBean findCliente(int id) {
+        mySQLRepository("select * from clientes where usuarios_id = ?");
+        ClientesBean cliente = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                cliente = new ClientesBean(
+                        resultSet.getInt("id"),
+                        resultSet.getString("fecha_nacimiento"),
+                        resultSet.getString("telefono"),
+                        new UsuariosDao().findOne(resultSet.getInt("usuarios_id")),
+                        resultSet.getString("domicilio")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAllConnections();
+        }
+        return cliente;
+    }
+
+
     public int fixId(int usuariosBean) {
         mySQLRepository("SELECT * FROM bibliutez.clientes WHERE (`usuarios_id`= ?)");
         try {
