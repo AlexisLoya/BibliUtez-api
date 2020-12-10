@@ -60,5 +60,18 @@ public class UsuariosRest  {
         return new UsuariosDao().findEmail(email);
     }
 
+    @POST
+    @Path("/findFull")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public UsuariosBean findFull(int id){ return new UsuariosDao().findFull(id);}
+
+    @POST
+    @Path("/update")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean findFull(UsuariosBean usuario){ return new UsuariosDao().updatePassword(usuario);}
+
+
 
 }

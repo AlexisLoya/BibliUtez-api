@@ -85,7 +85,7 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list; // COLOCASTE NULL
+        return list;
     }
 
     @Override
@@ -132,6 +132,46 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
                         resultSet.getInt("estatus"),
                         resultSet.getString("sexo"),
                         new RolesDao().findOne(resultSet.getInt("roles_id"))
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAllConnections();
+        }
+        return  usuario;
+    }
+
+    public boolean updatePassword(UsuariosBean obj) {
+        mySQLRepository("update usuarios SET password=? where id= ?");
+        try {
+            preparedStatement.setString(1, obj.getPassword());
+            preparedStatement.setInt(2, obj.getId());
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAllConnections();
+        }
+        return status;
+    }
+    public UsuariosBean findFull(int id) {
+        mySQLRepository("select * from usuarios where estatus = 1 and id = ?");
+        UsuariosBean usuario = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                usuario = new UsuariosBean(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nombre"),
+                        resultSet.getString("apellido1"),
+                        resultSet.getString("apellido2"),
+                        resultSet.getString("email"),
+                        resultSet.getInt("estatus"),
+                        resultSet.getString("sexo"),
+                        new RolesDao().findOne(resultSet.getInt("roles_id")),
+                        resultSet.getString("password")
                 );
             }
         } catch (SQLException e) {
