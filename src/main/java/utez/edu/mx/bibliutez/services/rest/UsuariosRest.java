@@ -66,11 +66,13 @@ public class UsuariosRest  {
     @Consumes(MediaType.APPLICATION_JSON)
     public UsuariosBean findFull(int id){ return new UsuariosDao().findFull(id);}
 
-    @POST
-    @Path("/update")
+    @PUT
+    @Path("/updatePassword")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public boolean findFull(UsuariosBean usuario){ return new UsuariosDao().updatePassword(usuario);}
+    public boolean findFull(UsuariosBean usuario){
+        System.out.println("llega?" + usuario.getPassword());
+        return new UsuariosDao().updatePassword(usuario);
+    }
 
 
 

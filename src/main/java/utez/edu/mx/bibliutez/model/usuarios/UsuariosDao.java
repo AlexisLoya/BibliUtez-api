@@ -153,6 +153,7 @@ public class UsuariosDao extends Dao implements DaoInterface<UsuariosBean> {
         } finally {
             closeAllConnections();
         }
+        System.out.println(obj.getPassword());
         return status;
     }
     public UsuariosBean findFull(int id) {
