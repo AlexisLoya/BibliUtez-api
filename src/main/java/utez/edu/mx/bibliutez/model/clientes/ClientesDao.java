@@ -11,16 +11,16 @@ import java.util.ArrayList;
 public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
     @Override
     public int add(ClientesBean obj) {
-        mySQLRepository("UPDATE `bibliutez`.`clientes` SET `fecha_nacimiento` = ?, `telefono` = ?, `domicilio` = ? WHERE (`usuarios_id`= ?)");
+        mySQLRepository("INSERT INTO `clientes` ( `fecha_nacimiento`, `telefono`, `usuarios_id`, `domicilio`) VALUES ( ?, ?, ?, ?);");
         System.out.println(obj);
         try {
             preparedStatement.setString(1, obj.getFecha_nacimiento());
             System.out.println("1");
             preparedStatement.setString(2, obj.getTelefono());
             System.out.println("2");
-            preparedStatement.setString(3, obj.getDomicilio());
+            preparedStatement.setInt(3, obj.getUsuariosBean().getId());
             System.out.println("3");
-            preparedStatement.setInt(4, obj.getUsuariosBean().getId());
+            preparedStatement.setString(4, obj.getDomicilio());
             System.out.println("4");
 
             status = preparedStatement.executeUpdate() == 1;
@@ -147,6 +147,11 @@ public class ClientesDao extends Dao implements DaoInterface<ClientesBean> {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public static void main(String[] args) {
+        UsuariosDao dao = new UsuariosDao();
+        System.out.println(new ClientesDao().add(new ClientesBean(1,"gecha", "dignasmlk", dao.findOne(41), "asd" )));
     }
 
 }

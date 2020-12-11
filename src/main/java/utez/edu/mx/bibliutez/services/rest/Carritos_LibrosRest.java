@@ -58,5 +58,11 @@ public class Carritos_LibrosRest {
     @Path("/sell")
     public boolean sellBook(Carritos_LibrosBean bean){ return  new Carritos_LibrosDao().sellBooks(bean);}
 
+    @DELETE
+    @Path("/deleteCarrito/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean deleteCarrito(@PathParam("id") int id){ return  new Carritos_LibrosDao().deleteCarrito(id); }
+
+
 
 }

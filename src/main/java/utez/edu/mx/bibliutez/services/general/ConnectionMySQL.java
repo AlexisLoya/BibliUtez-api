@@ -12,7 +12,7 @@ public class ConnectionMySQL {
     //Usuario en Mysql
     private static String user = "root";
     //Contraseña en Mysql
-    private static String password = "root";
+    private static String password = "";
     //Puerto
     private static String service = "3306";
 

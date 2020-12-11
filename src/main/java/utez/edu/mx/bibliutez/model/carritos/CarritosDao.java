@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class CarritosDao extends Dao implements DaoInterface<CarritosBean> {
     @Override
     public int add(CarritosBean obj) {
-        mySQLRepository("insert into carritos (usuaios_id) values (?)");
+        mySQLRepository("insert into carritos (usuarios_id) values (?)");
         try {
             preparedStatement.setInt(1, obj.getUsuarios_id().getId());
             preparedStatement.executeUpdate();

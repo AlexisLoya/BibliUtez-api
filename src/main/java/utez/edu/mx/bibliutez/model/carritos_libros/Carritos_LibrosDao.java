@@ -12,10 +12,11 @@ import java.util.ArrayList;
 public class Carritos_LibrosDao extends Dao implements DaoInterface<Carritos_LibrosBean> {
     @Override
     public int add(Carritos_LibrosBean obj) {
-        mySQLRepository("insert into carritos_libros (carritos_id, libros_id) values (?,?)");
+        mySQLRepository("insert into carritos_libros (carritos_id, libros_id, cantidad) values (?,?,?)");
         try {
             preparedStatement.setInt(1, obj.getCarritos_id().getId());
             preparedStatement.setInt(2, obj.getLibros_id().getId());
+            preparedStatement.setInt(3, obj.getCantidad());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) return resultSet.getInt(1);
@@ -124,6 +125,20 @@ public class Carritos_LibrosDao extends Dao implements DaoInterface<Carritos_Lib
         try {
             preparedStatement.setInt(1, catidad);
             preparedStatement.setInt(2, carritos_librosBean.getLibros_id().getId());
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAllConnections();
+        }
+        return status;
+    }
+
+
+    public boolean deleteCarrito(int id) {
+        mySQLRepository("DELETE FROM `carritos_libros` WHERE `carritos_id` = ?");
+        try {
+            preparedStatement.setInt(1, id);
             status = preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
