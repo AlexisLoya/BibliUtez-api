@@ -22,29 +22,43 @@ public class TransaccionesRest {
     @Path("/add")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public int add(TransaccionesBean obj){
+    public int add(TransaccionesBean obj) {
         return new TransaccionesDao().add(obj);
     }
 
     @GET
     @Path("/findOne")
     @Produces(MediaType.APPLICATION_JSON)
-    public TransaccionesBean findOne(@QueryParam("id") int id){
+    public TransaccionesBean findOne(@QueryParam("id") int id) {
         return new TransaccionesDao().findOne(id);
     }
 
     @GET
     @Path("/findAll")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<TransaccionesBean> findAll(){ return new TransaccionesDao().findAll(); }
+    public ArrayList<TransaccionesBean> findAll() {
+        return new TransaccionesDao().findAll();
+    }
+
+    @GET
+    @Path("/findHistory")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<TransaccionesBean> findHistory(@QueryParam("id") int id) {
+        return new TransaccionesDao().findHistory(id);
+    }
 
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean delete(@PathParam("id") int id){ return  new TransaccionesDao().delete(id); }
+    public boolean delete(@PathParam("id") int id) {
+        return new TransaccionesDao().delete(id);
+    }
 
     @PUT
     @Path("/update")
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean update(TransaccionesBean bean){ return new TransaccionesDao().update(bean); }
+    public boolean update(TransaccionesBean bean) {
+        return new TransaccionesDao().update(bean);
+    }
+
 }

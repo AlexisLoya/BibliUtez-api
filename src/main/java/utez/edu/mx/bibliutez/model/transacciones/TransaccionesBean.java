@@ -7,25 +7,26 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TransaccionesBean {
-    private int id;
-    private ClientesBean cliente;
-    private Double monto_total;
-    private Date fecha;
+        private int id;
+        private ClientesBean cliente;
+        private LibrosBean libro;
+        private Double monto_total;
+
 
     public TransaccionesBean() {
     }
 
-    public TransaccionesBean(ClientesBean cliente, Double monto_total, Date fecha) {
+    public TransaccionesBean(ClientesBean cliente, LibrosBean libro, Double monto_total) {
         this.cliente = cliente;
+        this.libro = libro;
         this.monto_total = monto_total;
-        this.fecha = fecha;
     }
 
-    public TransaccionesBean(int id, ClientesBean cliente, Double monto_total, Date fecha) {
+    public TransaccionesBean(int id, ClientesBean cliente, LibrosBean libro, Double monto_total) {
         this.id = id;
         this.cliente = cliente;
+        this.libro = libro;
         this.monto_total = monto_total;
-        this.fecha = fecha;
     }
 
     public int getId() {
@@ -44,6 +45,14 @@ public class TransaccionesBean {
         this.cliente = cliente;
     }
 
+    public LibrosBean getLibro() {
+        return libro;
+    }
+
+    public void setLibro(LibrosBean libro) {
+        this.libro = libro;
+    }
+
     public Double getMonto_total() {
         return monto_total;
     }
@@ -52,21 +61,13 @@ public class TransaccionesBean {
         this.monto_total = monto_total;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
     @Override
     public String toString() {
         return "TransaccionesBean{" +
                 "id=" + id +
                 ", cliente=" + cliente +
+                ", libro=" + libro +
                 ", monto_total=" + monto_total +
-                ", fecha=" + fecha +
                 '}';
     }
 }
